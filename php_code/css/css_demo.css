@@ -1,0 +1,45 @@
+/* 
+    Document   : css_demo
+    Created on : 11-Oct-2012, 07:23:31
+    Author     : santosh
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    font-size: 16px;
+    font-family:arial,serif,"Times roman";
+}
+
+table td {
+    color:blue;
+    background-color: yellow;
+    padding: 20px 20px 20px 20px;
+}
+body span{
+    color:#611b1b;
+    background-color: #36e2c2;
+    padding: 10px 10px 10px 10px;
+}
+body div{
+    background-color:orange;
+    width:50%;
+    padding: 20px 20px 20px 20px;
+}
+
+td div{
+    background-color: #ed1490;
+    color: #381328;
+    width:90%;
+    height:80%;
+}
+.testclass{
+    background-color:blue;
+    font-family:arial,serif;
+}
+#mydiv_withid{
+    font-style:oblique;
+    font-weight: bold;
+    
+    font-size:20px; 
+}
+  
