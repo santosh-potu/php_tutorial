@@ -36,7 +36,7 @@ switch($action){
 
 
 
-$products_query = " SELECT * FROM test_products ";
+$products_query = " SELECT * FROM cart_products ";
 $products_rs = $mysqli->query($products_query);
 $products = array();
 
@@ -172,7 +172,7 @@ function displayCart(){
     
     $place_holders = implode(',', array_fill(0, count(array_keys($shopping_cart['products'])), '?'));
    
-    $query = "SELECT * FROM test_products WHERE product_id in ($place_holders)";
+    $query = "SELECT * FROM cart_products WHERE product_id in ($place_holders)";
     
     $stmt = $mysqli->stmt_init();
     $stmt->prepare($query);
