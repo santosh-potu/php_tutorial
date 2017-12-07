@@ -2,10 +2,12 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteRule ^index\.php$ - [L]
+Options -Indexes
+RewriteBase /
+# php_value upload_max_filesize 50M
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.php [L]
+RewriteRule ^(.*)$ index.php?/$1 [L]
 </IfModule>
 
 # END WordPress
