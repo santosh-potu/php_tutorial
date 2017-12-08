@@ -19,6 +19,6 @@ class BaseController{
 
 
     public function indexAction($args = null,$optional=null){
-        echo "hello";
+        
     }
 }

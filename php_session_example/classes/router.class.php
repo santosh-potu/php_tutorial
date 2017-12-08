@@ -40,11 +40,22 @@ class Router{
         $method_name = $method.'Action';
         if(method_exists($controller_inst,$method_name) && 
                 is_callable(array($controller_inst),$method_name) ){
-            $controller_inst->$method_name();
+            $controller_inst->$method_name($this->getRequestParams());
         }else{
-            $controller_inst->indexAction();
+            $controller_inst->indexAction($this->getRequestParams());
         }
         
-    }    
-     
+    }
+    
+    public function getControllerParam(){
+        return $this->request_stack[0];
+    }
+    
+    public function getActionParam(){
+        return $this->request_stack[1];
+    }
+    
+    public function getRequestParams(){
+        return array_slice($this->request_stack,2);
+    }
 }
