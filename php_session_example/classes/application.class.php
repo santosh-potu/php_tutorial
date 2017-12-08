@@ -1,5 +1,5 @@
 <?php
-namespace Sanumakrish;
+namespace Kus;
 
 class Application{
     

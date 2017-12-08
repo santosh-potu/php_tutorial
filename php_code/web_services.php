@@ -17,7 +17,7 @@ if($_REQUEST['action'] == 'Get Convertion Rate'){
           }
         
 
-        $ws_client = new SoapClient($wsdl_path); 
+        $ws_client = new \SoapClient($wsdl_path); 
         extract($_REQUEST);
         $ConversionRate = array('FromCurrency'=>$FromCurrency,
             'ToCurrency'=>$ToCurrency);
