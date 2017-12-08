@@ -38,7 +38,8 @@ class Router{
         }
         
         $method_name = $method.'Action';
-        if(method_exists($controller_inst,$method_name) ){
+        if(method_exists($controller_inst,$method_name) && 
+                is_callable(array($controller_inst),$method_name) ){
             $controller_inst->$method_name();
         }else{
             $controller_inst->indexAction();
