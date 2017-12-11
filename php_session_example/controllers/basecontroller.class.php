@@ -3,9 +3,11 @@ namespace Controllers;
 
 class BaseController{
     protected static $self_inst;
-    
+    protected $view;
+
+
     protected function __construct(){
-        
+        $this->view = new \Kus\BaseView();
     }
     
     public static function getInstance(){
@@ -19,6 +21,6 @@ class BaseController{
 
 
     public function indexAction($args = null,$optional=null){
-        
+        $this->view->render('index', $args);
     }
 }
