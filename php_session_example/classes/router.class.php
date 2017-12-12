@@ -37,7 +37,7 @@ class Router{
             $controller_inst =  \Controllers\ErrorController::getInstance();
         }
         
-        $method_name = $method.'Action';
+        $method_name = $method.'Action';      
         if(method_exists($controller_inst,$method_name) && 
                 is_callable(array($controller_inst),$method_name) ){
             $controller_inst->$method_name($this->getRequestParams());
