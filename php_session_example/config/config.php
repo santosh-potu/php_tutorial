@@ -4,6 +4,7 @@ ini_set('display_errors','On');
 
 require_once '..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'auto_loader.php';
 
+session_start();
 //Db credentials
 define(DB_HOST,'localhost');
 define(DB_USER,'root');
