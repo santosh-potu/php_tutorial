@@ -13,3 +13,5 @@ define(DB_NAME,'php_tutorial');
 
 //PDO constants
 define(PDO_DSN, 'mysql:host='.DB_HOST.';dbname='.DB_NAME);
+
+$auth_required = array('index');

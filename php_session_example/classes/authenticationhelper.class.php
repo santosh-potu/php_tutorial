@@ -22,7 +22,12 @@ class AuthenticationHelper {
         return ($id!=NULL)?true:false;
     }
     
-    public static function isAuthenticated($id){
+    public static function isAuthenticated($id=NULL,$controler=''){
+        global $auth_required;
+        if(!$controler) {
+            $controler = strtolower(Router::getInstance()->getControllerParam());
+        }
         
+        return self::isLogged($id) && !in_array($controler,$auth_required);
     }
 }
