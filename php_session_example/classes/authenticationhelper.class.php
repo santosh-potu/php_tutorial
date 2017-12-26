@@ -15,7 +15,7 @@ namespace Kus;
  */
 class AuthenticationHelper {
 
-    public static function isLogged($id){
+    public static function isLogged($id=NULL){
         if ($id == NULL){
             $id = $_SESSION['user_id'];
         }

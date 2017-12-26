@@ -11,7 +11,8 @@ class BaseController{
     }
     
     public static function getInstance(){
-        if (self::$self_inst){
+        
+        if (self::$self_inst instanceof static){
             return self::$self_inst;
         }else{
             self::$self_inst = new static();
