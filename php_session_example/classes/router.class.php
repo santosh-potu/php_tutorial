@@ -5,6 +5,7 @@ class Router{
    
     private static $self_inst = null;
     private $request_stack = null;
+    private $request = null;
     
     
     private function __construct()
@@ -13,7 +14,8 @@ class Router{
         if (!$request_path) {
             $request_path[0] = $request_path[1] = 'Index';            
         }
-        $this->request_stack= $request_path;        
+        $this->request_stack= $request_path;
+        $this->request = Request::getInstance();         
     }
     
     public static function getInstance(){
