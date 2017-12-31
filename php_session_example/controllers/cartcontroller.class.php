@@ -22,10 +22,10 @@ class cartController extends \Controllers\BaseController{
     }
     
     public function updateAction($args = null,$optional =null){
-        echo "<pre>";
-        print_r($this->request->getPost());
-        echo "</pre>";
-        die();
+        $cart = new \Models\cart();
+        $cart->updateProducts($this->request->getPost());
+        $args['cart'] = $cart;
+        $args['detailed_products']= $cart->getDetailedProducts();
         $this->view->render('view_cart',$args);
     }
 }

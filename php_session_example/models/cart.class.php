@@ -44,6 +44,7 @@ class cart{
             $stmt = $db->prepare("SELECT * from cart_products WHERE product_id IN ($place_holders)");
             if($stmt->execute(array_keys($this->products))){
                 while($product = $stmt->fetch(\PDO::FETCH_ASSOC)){
+                    $product['qty'] = $this->products[$product['product_id']];
                     $detailed_products[$product['product_id']] = $product;
                 }
             }
