@@ -22,7 +22,8 @@ function app_autoloader($class){
         $class_dir_path .= strtolower($dir_ele).DIRECTORY_SEPARATOR ;
     }
     
-    $abs_file_path = '..'.DIRECTORY_SEPARATOR.$class_dir_path.$class_file;    
+    $abs_file_path = '..'.DIRECTORY_SEPARATOR.$class_dir_path.$class_file;
+       
     if (file_exists($abs_file_path)) {
         require_once $abs_file_path;
     }

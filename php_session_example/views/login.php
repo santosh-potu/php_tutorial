@@ -1,5 +1,16 @@
-<form action="login" method="post">
+<?php
+$errors = $args['errors'];
+?>
+<form action="login/Authenticate" method="post">
     <table>
+        <?php if ($errors) {
+            foreach($errors as $error){
+            echo "<tr><td colspan='2'>$error</td></tr>";
+            }
+        }
+        ?>
+            
+        </tr>
         <tr>
             <td><label for="user_name">Login</label></td>
             <td><input required="true" type="text" id="user_name" name="user_name"/></td>

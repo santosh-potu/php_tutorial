@@ -1,8 +1,7 @@
-<?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+<div>
+    <?php if(\Kus\AuthenticationHelper::isLogged()) { 
+                echo "<span><a href='login/out'>Logout</a></span>";
+            }
+    ?>
+</div>
 

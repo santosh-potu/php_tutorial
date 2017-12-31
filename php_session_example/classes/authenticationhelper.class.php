@@ -15,19 +15,19 @@ namespace Kus;
  */
 class AuthenticationHelper {
 
-    public static function isLogged($id=NULL){
-        if ($id == NULL){
+    public static function isLogged($id=null){
+        if ($id == null){
             $id = $_SESSION['user_id'];
         }
-        return ($id!=NULL)?true:false;
+        return ($id!=null)?true:false;
     }
     
-    public static function isAuthenticated($id=NULL,$controler=''){
+    public static function isAuthenticated($id=null,$controler=''){
         global $auth_required;
         if(!$controler) {
             $controler = strtolower(Router::getInstance()->getControllerParam());
         }
         
-        return self::isLogged($id) && !in_array($controler,$auth_required);
+        return self::isLogged($id) && in_array($controler,$auth_required);
     }
 }

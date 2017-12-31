@@ -29,19 +29,20 @@ class Router{
     
     public function route($controller=null, $method=null){
         
-        ($controller)?:$controller = $this->request_stack[0];
-        ($method)?:$method = $this->request_stack[1];
+        ($controller)?:$controller = ucfirst($this->request_stack[0]);
+        ($method)?:$method = strtolower($this->request_stack[1]);
         
-        $controller_class = '\\Controllers\\'.ucfirst($controller).'Controller';
+        $controller_class = '\\Controllers\\'.$controller.'Controller';
         if(class_exists($controller_class)){
             $controller_inst = $controller_class::getInstance();
         }else{
             $controller_inst =  \Controllers\ErrorController::getInstance();
         }
         
-        $method_name = $method.'Action';      
+        $method_name = $method.'Action';   
+        
         if(method_exists($controller_inst,$method_name) && 
-                is_callable(array($controller_inst),$method_name) ){
+                is_callable(array($controller_inst,$method_name)) ){
             $controller_inst->$method_name($this->getRequestParams());
         }else{
             $controller_inst->indexAction($this->getRequestParams());
