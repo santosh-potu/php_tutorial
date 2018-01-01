@@ -23,7 +23,10 @@ class UrlHelper {
         header("location:".self::getSiteUrl($path));
     }
     
-    public static function redirectToSite($path){
-        header("location:$path");
+    public static function redirectToUrl($url){
+        if (filter_var($url, FILTER_VALIDATE_URL)) {
+            header("Location:$url");
+        }
+        return false;
     }
 }
