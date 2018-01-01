@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2018 at 08:51 AM
+-- Generation Time: Jan 01, 2018 at 02:06 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.0.21
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `php_tuttorial`
+-- Database: `php_tutorial`
 --
 
 -- --------------------------------------------------------
@@ -222,7 +222,7 @@ INSERT INTO `currencies` (`id`, `code`, `description`) VALUES
 --
 
 CREATE TABLE `ip_hits` (
-  `customer_id` int(11) NOT NULL,
+  `record_id` int(11) NOT NULL,
   `user_agent` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `session_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -234,8 +234,9 @@ CREATE TABLE `ip_hits` (
 -- Dumping data for table `ip_hits`
 --
 
-INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
-(1, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36', 'uq613he4dqmfk4us60pvb5lt04', 6, '::1', '2017-12-31 23:13:31');
+INSERT INTO `ip_hits` (`record_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
+(2, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', 'dl4nu95o6i9j1v02rlfjt206i1', 16, '::1', '2018-01-01 17:25:21'),
+(3, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393', '6jp719j94ltdatbjf89isr9t77', 2, '::1', '2018-01-01 17:00:02');
 
 -- --------------------------------------------------------
 
@@ -245,17 +246,19 @@ INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_ad
 
 CREATE TABLE `languages` (
   `language_id` int(11) NOT NULL,
-  `language` varchar(50) DEFAULT NULL
+  `language` varchar(50) DEFAULT NULL,
+  `language_code` varchar(5) NOT NULL,
+  `is_active` tinyint(3) UNSIGNED NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `languages`
 --
 
-INSERT INTO `languages` (`language_id`, `language`) VALUES
-(1, 'English'),
-(2, 'తెలుగు'),
-(3, 'हिन्दी');
+INSERT INTO `languages` (`language_id`, `language`, `language_code`, `is_active`) VALUES
+(1, 'English', 'en', 1),
+(2, 'తెలుగు', 'te', 1),
+(3, 'हिन्दी', 'hi', 0);
 
 -- --------------------------------------------------------
 
@@ -328,8 +331,10 @@ ALTER TABLE `currencies`
 -- Indexes for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
-  ADD PRIMARY KEY (`customer_id`,`session_id`) USING BTREE,
-  ADD UNIQUE KEY `session_id` (`session_id`);
+  ADD PRIMARY KEY (`record_id`,`session_id`,`ip_address`) USING BTREE,
+  ADD UNIQUE KEY `session_id` (`session_id`),
+  ADD UNIQUE KEY `Ip_session` (`session_id`,`ip_address`),
+  ADD UNIQUE KEY `record_id` (`record_id`);
 
 --
 -- Indexes for table `languages`
@@ -370,7 +375,7 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `languages`
 --

@@ -34,27 +34,26 @@ function enroll_hit(){
          
          global $mysqli;
          
-         $customer_id = $_SESSION['customer_id'];
+         
          $ip_address = $_SERVER["REMOTE_ADDR"]; 
          $user_agent = $mysqli->real_escape_string($_SERVER["HTTP_USER_AGENT"]);
          $session_id = session_id();
          
          $session_timeout = ini_get("session.gc_maxlifetime");
-         $customer_id = 1;
          
-         $hits_query = "UPDATE ip_hits SET session_id = '$session_id' , 
-             user_agent = '$user_agent' , customer_id = '$customer_id' ,
-                 hits = hits + 1 , access_time = NOW()
-             WHERE ip_address = '$ip_address' AND DATEDIFF(NOW(),access_time) < 1 ";
+         
+         $hits_query = "UPDATE ip_hits SET user_agent = '$user_agent'  , ".
+                       " hits = hits + 1 , access_time = NOW() ".
+            " WHERE ip_address = '$ip_address' AND session_id = '$session_id' AND DATEDIFF(NOW(),access_time) < 1 ";
          
          $result = $mysqli->query($hits_query) or die($hits_query." -- ".$mysqli->error);
          $num_rows = $mysqli->affected_rows;
          
          if(!$num_rows){
              
-             $hits_query = "INSERT INTO ip_hits SET session_id = '$session_id' , 
-             user_agent = '$user_agent' , access_time = NOW(), customer_id = '$customer_id',
-             ip_address = '$ip_address' ";    
+             $hits_query = "INSERT INTO ip_hits SET session_id = '$session_id' ,"
+                     . " user_agent = '$user_agent' , access_time = NOW(), "
+                     . " ip_address = '$ip_address' ";    
              
              $mysqli->query($hits_query) or die($hits_query." -- ".$mysqli->error);
          }
