@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 01, 2018 at 11:30 AM
+-- Generation Time: Jan 01, 2018 at 11:34 AM
 -- Server version: 5.7.20-0ubuntu0.17.10.1
 -- PHP Version: 7.1.11-0ubuntu0.17.10.1
 
@@ -149,7 +149,7 @@ ALTER TABLE `cart_products`
 -- Indexes for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
-  ADD PRIMARY KEY (`customer_id`),
+  ADD PRIMARY KEY (`customer_id`,`session_id`) USING BTREE,
   ADD UNIQUE KEY `session_id` (`session_id`);
 
 --
