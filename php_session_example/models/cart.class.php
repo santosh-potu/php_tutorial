@@ -20,18 +20,40 @@ class cart{
     
     public function addProducts($params){
         $products= $params['product_quantity'];
-        
-        foreach($params['products'] as $product_id){
-            if(isset($products[$product_id]) && $products[$product_id] > 0){
-                $this->products[$product_id] = $this->products[$product_id] + $products[$product_id];
+        if($products){
+            foreach($params['products'] as $product_id){
+                if(isset($products[$product_id]) && $products[$product_id] > 0){
+                    $this->products[$product_id] = $this->products[$product_id] + $products[$product_id];
+                }
             }
-        }
+        }      
+        
         $_SESSION['cart']= $this;
         return $this;
     }
     
     public function updateProducts($params){
+        $products= $params['qty'];
+        $delete_products = $params['delete'];
         
+        if($products){
+            foreach($products as $product_id => $qty){
+                if($qty > 0){
+                    $this->products[$product_id] = $qty;
+                }else{
+                    unset($this->products[$product_id]);
+                }
+            }
+        }
+        
+        if($delete_products){
+            foreach($delete_products as $product_id){
+                unset($this->products[$product_id]);                
+            }
+        }
+        
+        $_SESSION['cart']= $this;
+        return $this;
     }
     
     public  function getDetailedProducts(){

@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 07, 2017 at 10:43 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.0.21
+-- Host: localhost:3306
+-- Generation Time: Jan 01, 2018 at 11:30 AM
+-- Server version: 5.7.20-0ubuntu0.17.10.1
+-- PHP Version: 7.1.11-0ubuntu0.17.10.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -40,7 +38,11 @@ CREATE TABLE `cart_products` (
 
 INSERT INTO `cart_products` (`product_id`, `product_name`, `product_price`) VALUES
 (1, 'Nokia 1100', 2800),
-(2, 'Iphone 6', 66000);
+(2, 'Iphone 6', 66000),
+(3, 'Mi Fitband', 1200),
+(4, 'Vega Helmet', 1600),
+(5, 'Redmi Note 4', 10000),
+(6, 'Micromax Bharat 1', 2500);
 
 -- --------------------------------------------------------
 
@@ -50,7 +52,7 @@ INSERT INTO `cart_products` (`product_id`, `product_name`, `product_price`) VALU
 
 CREATE TABLE `ip_hits` (
   `customer_id` int(11) NOT NULL,
-  `user_agent` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `user_agent` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `session_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `ip_address` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -62,7 +64,7 @@ CREATE TABLE `ip_hits` (
 --
 
 INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
-(1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94', 'dl4nu95o6i9j1v02rlfjt206i1', 10, '::1', '2017-12-07 15:12:49');
+(1, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36', 'uq613he4dqmfk4us60pvb5lt04', 6, '::1', '2017-12-31 23:13:31');
 
 -- --------------------------------------------------------
 
@@ -121,7 +123,7 @@ INSERT INTO `messages` (`message_id`, `language_id`, `message_key`, `message`) V
 CREATE TABLE `users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `user_name` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `pwd` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `pwd` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `email_id` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -131,7 +133,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `pwd`, `email_id`, `created_time`) VALUES
-(1, 'admin', 'admin', NULL, '2017-12-07 15:11:26');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, '2017-12-07 15:11:26');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +181,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart_products`
 --
 ALTER TABLE `cart_products`
-  MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `ip_hits`
 --
@@ -209,7 +211,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`language_id`) REFERENCES `languages` (`language_id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
