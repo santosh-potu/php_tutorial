@@ -9,6 +9,10 @@ class LoginController extends BaseController{
         parent::__construct();
     }
     public function indexAction($args = null, $optional = null) {
+        if(\Kus\AuthenticationHelper::isLogged()){
+          \Kus\UrlHelper::redirect('');  
+        }
+        
         $this->view->render('login', $args);
     }
     
@@ -18,11 +22,14 @@ class LoginController extends BaseController{
     }
     
     public function authenticateAction($args=null,$optional=null){
+        if(\Kus\AuthenticationHelper::isLogged()){
+          \Kus\UrlHelper::redirect('');  
+        }
         $request = $this->request;
         if($this->model->validate($request->getPost())){
             $user = $this->model->loginUser($request->getPost());
             if($user){
-                header('location: index.php');
+                \Kus\UrlHelper::redirect('');
             }else{
                 $args['errors'] = array('login_error'=>'Invalid credentials');
             }

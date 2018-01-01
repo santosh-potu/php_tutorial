@@ -22,8 +22,8 @@ class cartController extends \Controllers\BaseController{
         $cart->addProducts($this->request->getPost());
         $args['cart'] = $cart;
         $args['detailed_products']= $cart->getDetailedProducts();
-        
-        $this->view->render('cart_view',$args);
+        \Kus\UrlHelper::redirect('cart/view');
+        //$this->view->render('cart_view',$args);
     }
     
     public function updateAction($args = null,$optional =null){
@@ -31,7 +31,8 @@ class cartController extends \Controllers\BaseController{
         $cart->updateProducts($this->request->getPost());
         $args['cart'] = $cart;
         $args['detailed_products']= $cart->getDetailedProducts();
-        $this->view->render('cart_view',$args);
+        \Kus\UrlHelper::redirect('cart/view');
+        //$this->view->render('cart_view',$args);
     }
     
     public function checkoutAction($args =null,$optional=null){

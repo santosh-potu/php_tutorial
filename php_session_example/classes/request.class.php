@@ -48,9 +48,5 @@ class Request {
     
     public function getRequestType(){
         return $_SERVER['REQUEST_METHOD'];
-    }
-    
-    public function getRequestUri(){
-       return $_SERVER['REQUEST_URI'];
-    }
+    }       
 }

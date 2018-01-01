@@ -2,9 +2,12 @@
 require_once 'base'.DIRECTORY_SEPARATOR.'header.php';
 
 $products = $args['products'];
+$home_page = Kus\UrlHelper::getSiteUrl();
+$view_cart_page = Kus\UrlHelper::getSiteUrl('cart/view');
+$add_cart_page = Kus\UrlHelper::getSiteUrl('cart/add');
 ?>
-<h1> Products </h1> (<a title="View Cart" href="cart/view">View Cart</a>) 
-    <form method="post" action="cart/add" onsubmit="return verifyForm();">
+<h1> Products </h1> (<a title="View Cart" href="<?=$view_cart_page?>">View Cart</a>) 
+    <form method="post" action="<?=$add_cart_page?>" onsubmit="return verifyForm();">
            
         <table width="80%" border="1" cellspacing="3" cellpadding="3" >
             <?php
@@ -18,7 +21,10 @@ $products = $args['products'];
                   echo "</tr>";
               }
             ?>
-            <tr><td colspan="2" align="right"><input  type="submit" value="Add to Cart"/></td><td><input type="reset" value="cancel"/></td></tr>
+            <tr>
+                <td colspan="2" align="right"><input  type="submit" value="Add to Cart"/></td>
+                <td><input type="reset" value="cancel"/></td>
+            </tr>
         </table>
 
 <?php

@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 01, 2018 at 11:34 AM
--- Server version: 5.7.20-0ubuntu0.17.10.1
--- PHP Version: 7.1.11-0ubuntu0.17.10.1
+-- Host: 127.0.0.1
+-- Generation Time: Jan 01, 2018 at 08:51 AM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 7.0.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `php_tutorial`
+-- Database: `php_tuttorial`
 --
 
 -- --------------------------------------------------------
@@ -43,6 +45,175 @@ INSERT INTO `cart_products` (`product_id`, `product_name`, `product_price`) VALU
 (4, 'Vega Helmet', 1600),
 (5, 'Redmi Note 4', 10000),
 (6, 'Micromax Bharat 1', 2500);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `currencies`
+--
+
+CREATE TABLE `currencies` (
+  `id` int(11) NOT NULL,
+  `code` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` (`id`, `code`, `description`) VALUES
+(1, 'AFA', 'Afghanistan Afghani'),
+(2, 'ALL', 'Albanian Lek'),
+(3, 'DZD', 'Algerian Dinar'),
+(4, 'ARS', 'Argentine Peso'),
+(5, 'AWG', 'Aruba Florin'),
+(6, 'AUD', 'Australian Dollar'),
+(7, 'BSD', 'Bahamian Dollar'),
+(8, 'BHD', 'Bahraini Dinar'),
+(9, 'BDT', 'Bangladesh Taka'),
+(10, 'BBD', 'Barbados Dollar'),
+(11, 'BZD', 'Belize Dollar'),
+(12, 'BMD', 'Bermuda Dollar'),
+(13, 'BTN', 'Bhutan Ngultrum'),
+(14, 'BOB', 'Bolivian Boliviano'),
+(15, 'BWP', 'Botswana Pula'),
+(16, 'BRL', 'Brazilian Real'),
+(17, 'GBP', 'British Pound'),
+(18, 'BND', 'Brunei Dollar'),
+(19, 'BIF', 'Burundi Franc'),
+(20, 'XOF', 'CFA Franc (BCEAO)'),
+(21, 'XAF', 'CFA Franc (BEAC)'),
+(22, 'KHR', 'Cambodia Riel'),
+(23, 'CAD', 'Canadian Dollar'),
+(24, 'CVE', 'Cape Verde Escudo'),
+(25, 'KYD', 'Cayman Islands Dollar'),
+(26, 'CLP', 'Chilean Peso'),
+(27, 'CNY', 'Chinese Yuan'),
+(28, 'COP', 'Colombian Peso'),
+(29, 'KMF', 'Comoros Franc'),
+(30, 'CRC', 'Costa Rica Colon'),
+(31, 'HRK', 'Croatian Kuna'),
+(32, 'CUP', 'Cuban Peso'),
+(33, 'CYP', 'Cyprus Pound'),
+(34, 'CZK', 'Czech Koruna'),
+(35, 'DKK', 'Danish Krone'),
+(36, 'DJF', 'Dijibouti Franc'),
+(37, 'DOP', 'Dominican Peso'),
+(38, 'XCD', 'East Caribbean Dollar'),
+(39, 'EGP', 'Egyptian Pound'),
+(40, 'SVC', 'El Salvador Colon'),
+(41, 'EEK', 'Estonian Kroon'),
+(42, 'ETB', 'Ethiopian Birr'),
+(43, 'EUR', 'Euro'),
+(44, 'FKP', 'Falkland Islands Pound'),
+(45, 'GMD', 'Gambian Dalasi'),
+(46, 'GHC', 'Ghanian Cedi'),
+(47, 'GIP', 'Gibraltar Pound'),
+(48, 'XAU', 'Gold Ounces'),
+(49, 'GTQ', 'Guatemala Quetzal'),
+(50, 'GNF', 'Guinea Franc'),
+(51, 'GYD', 'Guyana Dollar'),
+(52, 'HTG', 'Haiti Gourde'),
+(53, 'HNL', 'Honduras Lempira'),
+(54, 'HKD', 'Hong Kong Dollar'),
+(55, 'HUF', 'Hungarian Forint'),
+(56, 'ISK', 'Iceland Krona'),
+(57, 'INR', 'Indian Rupee'),
+(58, 'IDR', 'Indonesian Rupiah'),
+(59, 'IQD', 'Iraqi Dinar'),
+(60, 'ILS', 'Israeli Shekel'),
+(61, 'JMD', 'Jamaican Dollar'),
+(62, 'JPY', 'Japanese Yen'),
+(63, 'JOD', 'Jordanian Dinar'),
+(64, 'KZT', 'Kazakhstan Tenge'),
+(65, 'KES', 'Kenyan Shilling'),
+(66, 'KRW', 'Korean Won'),
+(67, 'KWD', 'Kuwaiti Dinar'),
+(68, 'LAK', 'Lao Kip'),
+(69, 'LVL', 'Latvian Lat'),
+(70, 'LBP', 'Lebanese Pound'),
+(71, 'LSL', 'Lesotho Loti'),
+(72, 'LRD', 'Liberian Dollar'),
+(73, 'LYD', 'Libyan Dinar'),
+(74, 'LTL', 'Lithuanian Lita'),
+(75, 'MOP', 'Macau Pataca'),
+(76, 'MKD', 'Macedonian Denar'),
+(77, 'MGF', 'Malagasy Franc'),
+(78, 'MWK', 'Malawi Kwacha'),
+(79, 'MYR', 'Malaysian Ringgit'),
+(80, 'MVR', 'Maldives Rufiyaa'),
+(81, 'MTL', 'Maltese Lira'),
+(82, 'MRO', 'Mauritania Ougulya'),
+(83, 'MUR', 'Mauritius Rupee'),
+(84, 'MXN', 'Mexican Peso'),
+(85, 'MDL', 'Moldovan Leu'),
+(86, 'MNT', 'Mongolian Tugrik'),
+(87, 'MAD', 'Moroccan Dirham'),
+(88, 'MZM', 'Mozambique Metical'),
+(89, 'MMK', 'Myanmar Kyat'),
+(90, 'NAD', 'Namibian Dollar'),
+(91, 'NPR', 'Nepalese Rupee'),
+(92, 'ANG', 'Neth Antilles Guilder'),
+(93, 'NZD', 'New Zealand Dollar'),
+(94, 'NIO', 'Nicaragua Cordoba'),
+(95, 'NGN', 'Nigerian Naira'),
+(96, 'KPW', 'North Korean Won'),
+(97, 'NOK', 'Norwegian Krone'),
+(98, 'OMR', 'Omani Rial'),
+(99, 'XPF', 'Pacific Franc'),
+(100, 'PKR', 'Pakistani Rupee'),
+(101, 'XPD', 'Palladium Ounces'),
+(102, 'PAB', 'Panama Balboa'),
+(103, 'PGK', 'Papua New Guinea Kina'),
+(104, 'PYG', 'Paraguayan Guarani'),
+(105, 'PEN', 'Peruvian Nuevo Sol'),
+(106, 'PHP', 'Philippine Peso'),
+(107, 'XPT', 'Platinum Ounces'),
+(108, 'PLN', 'Polish Zloty'),
+(109, 'QAR', 'Qatar Rial'),
+(110, 'ROL', 'Romanian Leu'),
+(111, 'RUB', 'Russian Rouble'),
+(112, 'WST', 'Samoa Tala'),
+(113, 'STD', 'Sao Tome Dobra'),
+(114, 'SAR', 'Saudi Arabian Riyal'),
+(115, 'SCR', 'Seychelles Rupee'),
+(116, 'SLL', 'Sierra Leone Leone'),
+(117, 'XAG', 'Silver Ounces'),
+(118, 'SGD', 'Singapore Dollar'),
+(119, 'SKK', 'Slovak Koruna'),
+(120, 'SIT', 'Slovenian Tolar'),
+(121, 'SBD', 'Solomon Islands Dollar'),
+(122, 'SOS', 'Somali Shilling'),
+(123, 'ZAR', 'South African Rand'),
+(124, 'LKR', 'Sri Lanka Rupee'),
+(125, 'SHP', 'St Helena Pound'),
+(126, 'SDD', 'Sudanese Dinar'),
+(127, 'SRG', 'Surinam Guilder'),
+(128, 'SZL', 'Swaziland Lilageni'),
+(129, 'SEK', 'Swedish Krona'),
+(130, 'TRY', 'Turkey Lira'),
+(131, 'CHF', 'Swiss Franc'),
+(132, 'SYP', 'Syrian Pound'),
+(133, 'TWD', 'Taiwan Dollar'),
+(134, 'TZS', 'Tanzanian Shilling'),
+(135, 'THB', 'Thai Baht'),
+(136, 'TOP', 'Tonga Pa\'anga'),
+(137, 'TTD', 'Trinidad&amp;Tobago Dollar'),
+(138, 'TND', 'Tunisian Dinar'),
+(139, 'TRL', 'Turkish Lira'),
+(140, 'USD', 'U.S. Dollar'),
+(141, 'AED', 'UAE Dirham'),
+(142, 'UGX', 'Ugandan Shilling'),
+(143, 'UAH', 'Ukraine Hryvnia'),
+(144, 'UYU', 'Uruguayan New Peso'),
+(145, 'VUV', 'Vanuatu Vatu'),
+(146, 'VEB', 'Venezuelan Bolivar'),
+(147, 'VND', 'Vietnam Dong'),
+(148, 'YER', 'Yemen Riyal'),
+(149, 'YUM', 'Yugoslav Dinar'),
+(150, 'ZMK', 'Zambian Kwacha'),
+(151, 'ZWD', 'Zimbabwe Dollar');
 
 -- --------------------------------------------------------
 
@@ -146,6 +317,14 @@ ALTER TABLE `cart_products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `currencies`
+--
+ALTER TABLE `currencies`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`),
+  ADD UNIQUE KEY `description` (`description`);
+
+--
 -- Indexes for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
@@ -183,6 +362,11 @@ ALTER TABLE `users`
 ALTER TABLE `cart_products`
   MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
+-- AUTO_INCREMENT for table `currencies`
+--
+ALTER TABLE `currencies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+--
 -- AUTO_INCREMENT for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
@@ -211,6 +395,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `messages`
   ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`language_id`) REFERENCES `languages` (`language_id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

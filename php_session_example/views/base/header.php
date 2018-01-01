@@ -25,8 +25,11 @@
     </head>
 
 <div>
+    <span>
+         <?="<a href='".Kus\UrlHelper::getSiteUrl()."'>Home</a>"?>
+    </span>
     <?php if(\Kus\AuthenticationHelper::isLogged()) { 
-                echo "<span><a href='login/out'>Logout</a></span>";
+                echo "<span ><a href='".Kus\UrlHelper::getSiteUrl('login/out')."'>Logout</a></span>";
             }
     ?>
 </div>

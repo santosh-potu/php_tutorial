@@ -1,10 +1,13 @@
 <?php
 require_once 'base'.DIRECTORY_SEPARATOR.'header.php';
+
 $cart_products = $args['detailed_products'];
+$home_page = Kus\UrlHelper::getSiteUrl();
+$checkout_page = Kus\UrlHelper::getSiteUrl('cart/checkout');
 
 if(count($cart_products) == 0){
         $tr_string .= "<tr><td colspan='5' style='text-align:center;font-weight:bold;'>
-            Your Cart is empty To add Product <a href='index/'>Go back to Products</a></td></tr>";
+            Your Cart is empty To add Product <a href='$home_page'>Go back to Products</a></td></tr>";
 }else{
     foreach($cart_products as $product){       
       
@@ -42,12 +45,12 @@ if(count($cart_products)){
     </tr>
     <tr>
     <td colspan="2" style="text-align:right"><input type='button'  value='Back to products'
-        onClick="window.location.href='/index'" /></td>        
+        onClick="window.location.href='$home_page'" /></td>        
     <td colspan="2" style="text-align:right"><input type='submit' name='action' value='Update'/></td>
         
     <td><strong>
         <input type='button' name='checkout' value='Check Out' 
-            onclick='window.location="/cart/checkout"' /></td>
+            onclick='window.location="$checkout_page"' /></td>
     </tr>
 EOT;
 }    

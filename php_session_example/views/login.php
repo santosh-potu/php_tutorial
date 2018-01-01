@@ -1,7 +1,8 @@
 <?php
 $errors = $args['errors'];
+$authenticate_page = Kus\UrlHelper::getSiteUrl('login/authenticate');
 ?>
-<form action="login/Authenticate" method="post">
+<form action="<?=$authenticate_page?>" method="post">
     <table>
         <?php if ($errors) {
             foreach($errors as $error){
