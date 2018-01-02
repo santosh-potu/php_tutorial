@@ -2,6 +2,11 @@
 error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 ini_set('display_errors','On');
 
+// check PHPversion
+if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50400){
+    die('PHP version 5.4 or later required');
+}
+
 require_once '..'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'auto_loader.php';
 
 session_start();
