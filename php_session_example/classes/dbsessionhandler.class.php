@@ -1,88 +1,73 @@
 <?php
 namespace Kus;
 
-class DbSessionHandler implements \SessionHandlerInterface{
-    
-    /**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Initialize session
-	 * @link http://php.net/manual/en/sessionhandlerinterface.open.php
-	 * @param string $save_path <p>
-	 * The path where to store/retrieve the session.
-	 * </p>
-	 * @param string $name <p>
-	 * The session name.
-	 * </p>
-	 * @return bool The return value (usually <b>TRUE</b> on success, <b>FALSE</b> on failure). Note this value is returned internally to PHP for processing.
-	 */
-	public function open(string $save_path, string $name) : bool{
-            
-        }
+class DbSessionHandler extends \SessionHandler{
+   
+   protected $exists;
+   protected static $db;
+   protected static $log_file;
 
-	/**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Close the session
-	 * @link http://php.net/manual/en/sessionhandlerinterface.close.php
-	 * @return bool The return value (usually <b>TRUE</b> on success, <b>FALSE</b> on failure). Note this value is returned internally to PHP for processing.
-	 */
-	public function close(): bool{
-            
-        }
+    public function __construct() {
+        if(!isset(self::$db)){
+            self::$db = Application::getInstance()->getDbConnection();
+        }    
+        if(!isset(self::$log_file)){
+            self::$log_file = '..'.DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.'sessions.log';
+        }    
+        error_log("Constructor \n",3,self::$log_file);
+    }
+    public function open($save_path, $name) {       
+        error_log( "opened \n",3,self::$log_file);
+        return true;
+    }
 
-	/**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Read session data
-	 * @link http://php.net/manual/en/sessionhandlerinterface.read.php
-	 * @param string $session_id <p>
-	 * The session id.
-	 * </p>
-	 * @return string an encoded string of the read data. If nothing was read, it must return an empty string. Note this value is returned internally to PHP for processing.
-	 */
-	public function read(string $session_id): string{
-            
-        }
+    public function close() {
+        error_log( "Closed \n",3,self::$log_file);
+        return true;    
+    }
 
-	/**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Write session data
-	 * @link http://php.net/manual/en/sessionhandlerinterface.write.php
-	 * @param string $session_id <p>
-	 * The session id.
-	 * </p>
-	 * @param string $session_data <p>
-	 * The encoded session data. This data is the result of the PHP internally encoding the $_SESSION superglobal to a serialized
-	 * string and passing it as this parameter. Please note sessions use an alternative serialization method.
-	 * </p>
-	 * @return bool The return value (usually <b>TRUE</b> on success, <b>FALSE</b> on failure). Note this value is returned internally to PHP for processing.
-	 */
-	public function write(string $session_id, string $session_data): bool{
-            
-        }
+    public function destroy($session_id) {
+        $sth = self::$db->prepare("DELETE FROM sessions WHERE session_id = ?");
+        $sth->execute(array($session_id));
+        error_log( "Destroyed \n",3,self::$log_file);
+        return true;
+    }
 
-	/**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Destroy a session
-	 * @link http://php.net/manual/en/sessionhandlerinterface.destroy.php
-	 * @param string $session_id <p>
-	 * The session ID being destroyed.
-	 * </p>
-	 * @return bool The return value (usually <b>TRUE</b> on success, <b>FALSE</b> on failure). Note this value is returned internally to PHP for processing.
-	 */
-	public function destroy(string $session_id): bool{
-            
-        }
+    public function gc($maxlifetime) {
+        $sth = self::$db->prepare("DELETE FROM sessions WHERE session_lastaccesstime < ?");
+        $sth->execute(array(time() - $maxlifetime)); 
+        error_log( "Gc \n",3,self::$log_file);
+        return true;    
+    }
 
-	/**
-	 * (PHP 5 &gt;= 5.4.0, PHP 7)<br/>
-	 * Cleanup old sessions
-	 * @link http://php.net/manual/en/sessionhandlerinterface.gc.php
-	 * @param int $maxlifetime <p>
-	 * Sessions that have not updated for the last <i>maxlifetime</i> seconds will be removed.
-	 * </p>
-	 * @return bool The return value (usually <b>TRUE</b> on success, <b>FALSE</b> on failure). Note this value is returned internally to PHP for processing.
-	 */
-	public function gc(int $maxlifetime): bool{
-            
+    public function read($session_id) {
+        $sth = self::$db->prepare("SELECT session_data FROM sessions WHERE session_id = ?");
+        $sth->execute(array($session_id));
+        $rows = $sth->fetchALL(\PDO::FETCH_NUM);
+        error_log( "Reading \n",3,self::$log_file);
+        if (count($rows) == 0) {
+            $this->exists = "n";
+            return '';
         }
+        else {
+            $this->exists = "y";
+            return $rows[0][0];
+        }   
+
+    }
+    public function write($session_id, $session_data) {
+
+        if ($this->exists == "y") {
+            $sth = self::$db->prepare("UPDATE sessions SET session_data = ? WHERE session_id = ?");
+            $sth->execute(array($session_data, $session_id));
+        }
+        if ($this->exists == "n") {
+
+            $sth = self::$db->prepare("INSERT INTO sessions (session_id, session_data) VALUES (?, ?)");
+            $sth->execute(array($session_id, $session_data));           
+        }
+       error_log( "Writing \n",3,self::$log_file);
+        return true;
+    }
 }
 
