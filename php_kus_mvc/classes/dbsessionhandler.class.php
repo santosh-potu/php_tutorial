@@ -1,6 +1,7 @@
 <?php
 namespace Kus;
 
+//ini_set('session.use_strict_mode', 1);
 class DbSessionHandler extends \SessionHandler{
    
    protected $exists;
@@ -17,6 +18,10 @@ class DbSessionHandler extends \SessionHandler{
         error_log("Constructor \n",3,self::$log_file); **/
     }
     
+    public function create_sid() {
+        return 'session-'.md5(rand(1, time()));
+    }
+
     public function open($save_path, $name) {       
         return true;
     }

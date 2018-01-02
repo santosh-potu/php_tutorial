@@ -295,7 +295,7 @@ INSERT INTO `messages` (`message_id`, `language_id`, `message_key`, `message`) V
 --
 
 CREATE TABLE `sessions` (
-  `session_id` char(32) NOT NULL,
+  `session_id` varchar(100) NOT NULL,
   `session_data` text NOT NULL,
   `session_lastaccesstime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

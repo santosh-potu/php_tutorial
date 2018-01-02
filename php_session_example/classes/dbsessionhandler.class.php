@@ -1,9 +1,10 @@
 <?php
 namespace Kus;
 
+//ini_set('session.use_strict_mode', 1);
+
 class DbSessionHandler extends \SessionHandler{
    
-   protected $exists;
    protected static $db;
    protected static $log_file;
 
@@ -16,6 +17,11 @@ class DbSessionHandler extends \SessionHandler{
         }    
         error_log("Constructor \n",3,self::$log_file);
     }
+    
+    public function create_sid() {
+        return 'session-'.md5(rand(1, time()));
+    }
+
     public function open($save_path, $name) {       
         error_log( "opened \n",3,self::$log_file);
         return true;
@@ -57,16 +63,12 @@ class DbSessionHandler extends \SessionHandler{
     }
     public function write($session_id, $session_data) {
 
-        if ($this->exists == "y") {
-            $sth = self::$db->prepare("UPDATE sessions SET session_data = ? WHERE session_id = ?");
-            $sth->execute(array($session_data, $session_id));
-        }
-        if ($this->exists == "n") {
-
-            $sth = self::$db->prepare("INSERT INTO sessions (session_id, session_data) VALUES (?, ?)");
-            $sth->execute(array($session_id, $session_data));           
-        }
-       error_log( "Writing \n",3,self::$log_file);
+        $sth = self::$db->prepare("INSERT INTO sessions (session_id, session_data) VALUES (:session_id, :session_data)"
+                . " ON DUPLICATE KEY UPDATE session_data = :session_data ");
+        $sth->execute(array(':session_id'=>$session_id, 
+                            ':session_data'=>$session_data));           
+        
+        error_log( "Writing \n",3,self::$log_file);
         return true;
     }
 }
