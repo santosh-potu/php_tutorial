@@ -5,46 +5,42 @@ class DbSessionHandler extends \SessionHandler{
    
    protected $exists;
    protected static $db;
-   protected static $log_file;
+   // protected static $log_file;
 
     public function __construct() {
         if(!isset(self::$db)){
             self::$db = Application::getInstance()->getDbConnection();
         }    
-        if(!isset(self::$log_file)){
+        /** if(!isset(self::$log_file)){
             self::$log_file = realpath('..').DIRECTORY_SEPARATOR.'logs'.DIRECTORY_SEPARATOR.'sessions.log';           
         }    
-        error_log("Constructor \n",3,self::$log_file);
+        error_log("Constructor \n",3,self::$log_file); **/
     }
+    
     public function open($save_path, $name) {       
-        error_log( "opened \n",3,self::$log_file);
         return true;
     }
 
-    public function close() {
-        error_log( "Closed \n",3,self::$log_file);
+    public function close() {        
         return true;    
     }
 
     public function destroy($session_id) {
         $sth = self::$db->prepare("DELETE FROM sessions WHERE session_id = ?");
-        $sth->execute(array($session_id));
-        error_log( "Destroyed \n",3,self::$log_file);
+        $sth->execute(array($session_id));       
         return true;
     }
 
     public function gc($maxlifetime) {
         $sth = self::$db->prepare("DELETE FROM sessions WHERE session_lastaccesstime < ?");
-        $sth->execute(array(time() - $maxlifetime)); 
-        error_log( "Gc \n",3,self::$log_file);
+        $sth->execute(array(time() - $maxlifetime));       
         return true;    
     }
 
     public function read($session_id) {
         $sth = self::$db->prepare("SELECT session_data FROM sessions WHERE session_id = ?");
         $sth->execute(array($session_id));
-        $rows = $sth->fetchALL(\PDO::FETCH_NUM);
-        error_log( "Reading \n",3,self::$log_file);
+        $rows = $sth->fetchALL(\PDO::FETCH_NUM);        
         if (count($rows) == 0) {
             $this->exists = "n";
             return '';
@@ -65,8 +61,7 @@ class DbSessionHandler extends \SessionHandler{
 
             $sth = self::$db->prepare("INSERT INTO sessions (session_id, session_data) VALUES (?, ?)");
             $sth->execute(array($session_id, $session_data));           
-        }
-       error_log( "Writing \n",3,self::$log_file);
+        }       
         return true;
     }
 }

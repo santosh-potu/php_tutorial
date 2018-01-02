@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2018 at 02:06 PM
+-- Generation Time: Jan 02, 2018 at 03:11 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.0.21
 
@@ -291,6 +291,25 @@ INSERT INTO `messages` (`message_id`, `language_id`, `message_key`, `message`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `session_id` char(32) NOT NULL,
+  `session_data` text NOT NULL,
+  `session_lastaccesstime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `session_data`, `session_lastaccesstime`) VALUES
+('6jp719j94ltdatbjf89isr9t77', 'user_id|s:1:\"1\";cart|O:11:\"Models\\cart\":1:{s:21:\"\0Models\\cart\0products\";a:3:{i:2;s:1:\"2\";i:4;s:2:\"61\";i:5;s:2:\"65\";}}', '2018-01-02 13:59:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -348,6 +367,13 @@ ALTER TABLE `languages`
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`message_id`),
   ADD UNIQUE KEY `Unique_messsage` (`language_id`,`message_key`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`),
+  ADD UNIQUE KEY `session_id` (`session_id`);
 
 --
 -- Indexes for table `users`

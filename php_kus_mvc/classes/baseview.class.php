@@ -3,12 +3,12 @@ namespace Kus;
 
 class BaseView{
     protected  $router;
-    protected $request_params;
+    protected $request;
     protected $params ;
     
     public function __construct() {
         $this->router = \Kus\Router::getInstance();
-        $this->request_params = $this->router->getRequestParams();
+        $this->request = Request::getInstance();
     }
     
     public function render($template,$args){

@@ -18,7 +18,7 @@ class Request {
     protected function __construct(){
         $this->get = (count(array_keys($_GET))) ? explode('/', trim(array_keys($_GET)[0],'/')):null;  
         $this->post = $_POST;
-        $this->request = $_REQUEST;        
+        $this->request = $_REQUEST;
     }
     
     public static function getInstance(){
@@ -48,9 +48,5 @@ class Request {
     
     public function getRequestType(){
         return $_SERVER['REQUEST_METHOD'];
-    }
-    
-    public function getRequestUri(){
-       return $_SERVER['REQUEST_URI'];
-    }
+    }       
 }
