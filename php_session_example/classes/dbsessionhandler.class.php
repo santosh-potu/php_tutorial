@@ -42,7 +42,7 @@ class DbSessionHandler extends \SessionHandler{
     public function gc($maxlifetime) {
         $sth = self::$db->prepare("DELETE FROM sessions WHERE session_lastaccesstime < ?");
         $sth->execute(array(time() - $maxlifetime)); 
-        error_log( "Gc \n",3,self::$log_file);
+        error_log( "Gc: ".date("F j, Y, g:i a")."\n",3,self::$log_file);
         return true;    
     }
 
