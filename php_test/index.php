@@ -75,10 +75,9 @@ require_once '../php_code/library'.DIRECTORY_SEPARATOR.'config.php';
             
         }
 
-    } 
-    $x->test();
+    }        
 }catch(Error $e){
-    echo "error:".$e->getMessage();
+    echo $e->getMessage();
 }        
         ?>
         </body>
