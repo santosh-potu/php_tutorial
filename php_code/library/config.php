@@ -44,7 +44,7 @@ function enroll_hit(){
          
          $hits_query = "UPDATE ip_hits SET user_agent = '$user_agent'  , ".
                        " hits = hits + 1 , access_time = NOW() ".
-            " WHERE ip_address = '$ip_address' AND session_id = '$session_id' AND DATEDIFF(NOW(),access_time) < 1 ";
+            " WHERE ip_address = '$ip_address' AND session_id = '$session_id' AND DATEDIFF(NOW(),access_time) >= 1 ";
          
          $result = $mysqli->query($hits_query) or die($hits_query." -- ".$mysqli->error);
          $num_rows = $mysqli->affected_rows;
@@ -53,7 +53,8 @@ function enroll_hit(){
              
              $hits_query = "INSERT INTO ip_hits SET session_id = '$session_id' ,"
                      . " user_agent = '$user_agent' , access_time = NOW(), "
-                     . " ip_address = '$ip_address' ON DUPLICATE KEY UPDATE hits = hits +1 ";    
+                     . " ip_address = '$ip_address' ON DUPLICATE KEY UPDATE "
+                     . " session_id = '$session_id'  ";    
              
              $mysqli->query($hits_query) or die($hits_query." -- ".$mysqli->error);
          }
