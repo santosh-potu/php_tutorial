@@ -53,7 +53,7 @@ function enroll_hit(){
              
              $hits_query = "INSERT INTO ip_hits SET session_id = '$session_id' ,"
                      . " user_agent = '$user_agent' , access_time = NOW(), "
-                     . " ip_address = '$ip_address' ";    
+                     . " ip_address = '$ip_address' ON DUPLICATE KEY UPDATE hits = hits +1 ";    
              
              $mysqli->query($hits_query) or die($hits_query." -- ".$mysqli->error);
          }
