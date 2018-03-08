@@ -19,6 +19,7 @@ class DbSessionHandler extends \SessionHandler{
     }
     
     public function create_sid() {
+        error_log(session_id(). "---\n",3,self::$log_file);        
         return 'session-'.md5(rand(1, time()));
     }
 
