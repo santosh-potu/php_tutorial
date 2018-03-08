@@ -1,5 +1,5 @@
 <?php
-try{
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -75,11 +75,8 @@ require_once '../php_code/library'.DIRECTORY_SEPARATOR.'config.php';
             
         }
 
-    } 
-    $x->test();
-}catch(Error $e){
-    echo "error:".$e->getMessage();
-}        
+    }        
+       
         ?>
         </body>
     
