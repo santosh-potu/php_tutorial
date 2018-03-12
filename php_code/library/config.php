@@ -8,18 +8,9 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 ini_set('display_errors','On');
 
 session_start();
+define('ENV','dev');
+require_once 'library'.DIRECTORY_SEPARATOR.ENV.'.php';
 
-if($_SERVER["SERVER_NAME"] != 'localhost'){
-    define(DB_HOST,'mysql1.000webhost.com');
-    define(DB_USER,'a4832129_spotu16');
-    define(DB_PWD,'psreddy82');
-    define(DB_NAME,'a4832129_spotu16');
-}else{
-    define(DB_HOST,'localhost');
-    define(DB_USER,'root');
-    define(DB_PWD,'root');
-    define(DB_NAME,'php_tutorial');
-}
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PWD,DB_NAME);
 
 if ($mysqli->connect_errno) {
