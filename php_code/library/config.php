@@ -1,13 +1,6 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
-ini_set('display_errors','On');
-
 session_start();
+
 define('ENV','dev');
 require_once 'library'.DIRECTORY_SEPARATOR.ENV.'.php';
 
