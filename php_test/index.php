@@ -6,7 +6,8 @@ try{
  */
 //error_reporting(E_ALL);
 ini_set('display_errors', 'on');
-require_once '../php_code/library'.DIRECTORY_SEPARATOR.'config.php';
+ini_set('include_path','..'.DIRECTORY_SEPARATOR.'php_code'.DIRECTORY_SEPARATOR);
+require_once 'library'.DIRECTORY_SEPARATOR.'config.php';
 
 ?>
 <html>
