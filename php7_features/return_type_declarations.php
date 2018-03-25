@@ -9,26 +9,33 @@ ini_set('log_errors','on');
 
 $x =<<<EOF
         declare(strict_types=1);
-        // Coercive mode if not strict
-    function sumOfInts(int ...$ints){
-        return array_sum($ints);
-    }
+        function arraysSum(array ...$arrays): array
+{
+    return array_map(function(array $array): int {
+        return array_sum($array);
+    }, $arrays);
+}
 
-    var_dump(sumOfInts(2, '3', 4.1));
+print_r(arraysSum([1,2,3], [4,5,6], [7,8,9]));
 EOF;
 echo nl2br($x);
 try{
-    // Coercive mode if not strict
-    function sumOfInts(int ...$ints){
-        return array_sum($ints);
+    
+    function arraysSum(array ...$arrays):array
+    {
+        return array_map(function(array $array):int{
+        
+            return array_sum($array);
+        },$arrays);
     }
 
-    var_dump(sumOfInts(2, '3', 4.1));
     echo "<br/>";
+    print_r(arraysSum([1,2,3], [4,5,6], [7,8,9]));
+    
 
 
 
-    var_dump(sumOfInts(2, '3', 4.1));
+    
 }catch(Throwable $t){
     echo "<br/> error is...<br/>";
     echo $t->getMessage();
