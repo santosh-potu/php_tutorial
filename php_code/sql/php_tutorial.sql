@@ -50,7 +50,7 @@ INSERT INTO `cart_products` (`product_id`, `product_name`, `product_price`) VALU
 
 CREATE TABLE `ip_hits` (
   `customer_id` int(11) NOT NULL,
-  `user_agent` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `user_agent` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `session_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `ip_address` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
@@ -61,8 +61,8 @@ CREATE TABLE `ip_hits` (
 -- Dumping data for table `ip_hits`
 --
 
-INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
-(1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94', 'dl4nu95o6i9j1v02rlfjt206i1', 10, '::1', '2017-12-07 15:12:49');
+-- INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
+-- (1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94', 'dl4nu95o6i9j1v02rlfjt206i1', 10, '::1', '2017-12-07 15:12:49');
 
 -- --------------------------------------------------------
 
