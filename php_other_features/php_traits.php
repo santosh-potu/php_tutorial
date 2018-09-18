@@ -27,3 +27,39 @@ echo "<pre>";
 var_dump($b);
 var_dump($a);
 echo "</pre>";
+
+trait Hello
+{
+    function sayHello(){
+        return "Hello";
+    }
+}
+
+trait World
+{
+    function sayWorld(){
+        return "World";
+    }
+}
+
+trait HelloWorld{
+    use Hello,World;
+}
+
+class MyWorld
+{
+    use HelloWorld;
+}
+
+$world = new MyWorld;
+
+echo "<br/>".$world->sayHello().' - '.$world->sayWorld()."<br/>";
+
+
+
+
+
+
+
+
+
