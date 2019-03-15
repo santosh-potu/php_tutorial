@@ -154,7 +154,7 @@ function _date_range_limit_days($base, $result)
     $days_in_month_leap = array(31, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
     $days_in_month = array(31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
-    _date_range_limit(1, 13, 12, "m", "y", &$base);
+    _date_range_limit(1, 13, 12, "m", "y", $base);
 
     $year = $base["y"];
     $month = $base["m"];
@@ -199,7 +199,7 @@ function _date_normalize($base, $result)
     $result = _date_range_limit(0, 24, 24, "h", "d", $result);
     $result = _date_range_limit(0, 12, 12, "m", "y", $result);
 
-    $result = _date_range_limit_days(&$base, &$result);
+    $result = _date_range_limit_days($base, $result);
 
     $result = _date_range_limit(0, 12, 12, "m", "y", $result);
 
@@ -232,9 +232,9 @@ function _date_diff($one, $two)
     $result["days"] = intval(abs(($one - $two)/86400));
 
     if ($invert) {
-        _date_normalize(&$a, &$result);
+        _date_normalize($a, $result);
     } else {
-        _date_normalize(&$b, &$result);
+        _date_normalize($b, $result);
     }
 
     return $result;
