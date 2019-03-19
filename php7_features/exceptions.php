@@ -5,7 +5,7 @@ require_once '../php_code/library'.DIRECTORY_SEPARATOR.'config.php';
 try{
    $x->test(); 
 } catch (Error $ex) {
-    echo "<pre>";
+    echo "<br\>Error caught:<pre>";
     print_r($ex);
     echo "</pre>";
     
@@ -14,7 +14,7 @@ try{
 try{
    $x = 1%0;
 } catch (Error $ex) {
-    echo "<pre>";
+    echo "<br\>Error caught:<pre>";
     print_r($ex);
     echo "</pre>";
     
@@ -23,8 +23,7 @@ try{
 try{
     require 'xyz.php';
 } catch (Throwable $ex) {
-   echo "<pre>";
+   echo "<br\>Error caught:<pre>";
    print_r($ex);
    echo "</pre>";
-   die();
-}
+   }

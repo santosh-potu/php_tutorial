@@ -2,7 +2,7 @@
 session_start();
 
 define('ENV','dev');
-require_once 'library'.DIRECTORY_SEPARATOR.ENV.'.php';
+require_once __DIR__.DIRECTORY_SEPARATOR.ENV.'.php';
 
 $mysqli = new mysqli(DB_HOST,DB_USER,DB_PWD,DB_NAME);
 
