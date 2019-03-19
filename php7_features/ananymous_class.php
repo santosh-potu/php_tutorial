@@ -1,6 +1,6 @@
 <?php
 try{
-$x = <<<EOF
+$x = <<<'EOF'
         Interface Logger{
     public function log(string $msg);
 }

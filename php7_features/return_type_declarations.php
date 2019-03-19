@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 ini_set('display_errors','off');
 ini_set('log_errors','on');
 
-$x =<<<EOF
+$x =<<<'EOF'
         declare(strict_types=1);
         function arraysSum(array ...$arrays): array
 {
