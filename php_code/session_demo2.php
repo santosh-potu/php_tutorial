@@ -19,7 +19,7 @@ if($_REQUEST['action'] == 'logout'){
         exit;
     }
     
-if( isset($_COOKIE['user_name'] )&&isset($_COOKIE['pwd'] )){
+if(!isset($_SESSION['user_id']) && ( isset($_COOKIE['user_name'] )&&isset($_COOKIE['pwd'] )) ){
    $_REQUEST['action'] = 'login';
    $_REQUEST['from_cookie'] = 1;
    $_REQUEST['user_name'] = $_COOKIE['user_name'];
@@ -38,10 +38,10 @@ if($_REQUEST['action'] == 'login'  ){
   
   if(!count($errors)){
       $login_query = "SELECT * FROM users WHERE user_name = ?  
-          AND pwd = ? ";
+          AND pwd = MD5(?) ";
       if($_REQUEST['from_cookie']){
           $login_query = "SELECT * FROM users WHERE user_name = ? 
-          AND MD5(pwd) = ? ";
+          AND pwd = ? ";
           
       }
       
@@ -101,9 +101,11 @@ if($_REQUEST['action'] == 'login'  ){
                     <tr>
                         <td colspan="2" style="color:red;">
                             <?php 
-                             foreach($errors as $error){
-                                 echo $error.'<br/>';
-                             }
+                            if(count($errors) > 0){
+                                foreach($errors as $error){
+                                echo $error.'<br/>';
+                                }
+                            }
                             ?>
                         </td>
                         
