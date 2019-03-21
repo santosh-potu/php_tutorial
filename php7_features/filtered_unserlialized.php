@@ -3,45 +3,45 @@ ini_set('display_errors', 'on');
 set_include_path('..'.DIRECTORY_SEPARATOR.'php_code'.DIRECTORY_SEPARATOR);
 require_once 'library'.DIRECTORY_SEPARATOR.'config.php';
 
-$x = <<<EOF
+$x = <<<'EOF'
         class User{
-    public $ name;
-    public function __construct($ name) {
-        $ this->name = $ name;
+    public $name;
+    public function __construct($name) {
+        $this->name = $name;
     }
 }
 
 class Admin extends User{
-    public \$superpowers = true;
+    public $superpowers = true;
 }
 
-\$lynda = new User('Lynda');
-\$string = serialize(\$lynda);
-echo \$string;
+$lynda = new User('Lynda');
+$string = serialize($lynda);
+echo $string;
 
-$ bad_string = str_replace('4:"User"', '5:"Admin"', $ string);
+$bad_string = str_replace('4:"User"', '5:"Admin"', $string);
 
-echo $ bad_string;
+echo $bad_string;
 
 
-$ new_user = unserialize($ bad_string);
+$new_user = unserialize($bad_string);
 
-echo ' Name:<br/>';
-echo $ new_user->name;
-echo ' Class:<br/>';
+echo ' Name:';
+echo $new_user->name;
+echo ' Class:';
 echo get_class($ new_user);
 
 
 
-echo $ new_user->superpowers? 'true':'false';
+echo $new_user->superpowers? 'true':'false';
 
-$ options = array('allowed_classes'=>false);
+$options = array('allowed_classes'=>false);
 
-$ new_user = unserialize($ bad_string,$ options);
+$new_user = unserialize($bad_string,$options);
 
-var_dump($ new_user);
+var_dump($new_user);
 
-echo get_class($ new_user);
+echo get_class($new_user);
                
 EOF;
 

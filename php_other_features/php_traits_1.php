@@ -14,10 +14,12 @@ trait Hello
     function sayHelloWorld()
     {
         echo $this->sayHello()." ".$this->sayWorld();
+        echo '<br/>';
     }
     function sayBaseWorld()
     {
         echo $this->sayHello()." ". parent::sayWorld();
+        echo '<br/>';
     }
 }
 
