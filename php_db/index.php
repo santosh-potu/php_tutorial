@@ -30,7 +30,7 @@ require_once 'library'.DIRECTORY_SEPARATOR.'config.php';
     $file_content = file_get_contents($_REQUEST['source']);
     $lines = substr_count($file_content,"\n");
     
-    echo "<textarea rows='$lines' cols='100' readonly='true'>".($file_content)."</textarea>";
+    echo "<textarea rows='$lines' cols='100' readonly='true'>". htmlentities($file_content)."</textarea>";
     exit;
 }
         $current_dir_files = scandir('.');
