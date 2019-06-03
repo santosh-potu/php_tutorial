@@ -7,9 +7,15 @@ $pdo = new PDO($dsn,DB_USER,DB_PWD,array(PDO::ATTR_PERSISTENT => true));
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pdo->query("SET CHARSET utf8");
 
-$stmt = $pdo->query("SELECT * FROM test");
+$stmt = $pdo->prepare("SELECT * FROM test");
+$stmt->execute();
 
 if($stmt->rowCount()){
+    $stmt->bindColumn(1, $id);
+    $stmt->bindColumn('name', $name);
+    $stmt->bindColumn('description', $desc);
+    $stmt->bindColumn(4, $updated_at);
+    
     echo '<table border=3 >';
     echo "<tr>";
           for($i=0; $i<$stmt->columnCount();$i++){
@@ -18,9 +24,9 @@ if($stmt->rowCount()){
     echo "<th><a href='php_pdo_insert_record.php'> Insert Record</a></th></tr>";
     while($row = $stmt->fetch()){
         //print_r($row);
-       echo " <tr><td>{$row['id']}</td><td>{$row['name']}</td>"
-       . "<td>{$row['description']}</td><td>{$row['updated_at']}</td>"
-       . "<td><a href='php_pdo_edit_record.php?id={$row['id']}'>Edit</a></td></tr>";
+       echo " <tr><td>{$id}</td><td>{$name}</td>"
+       . "<td>{$desc}</td><td>{$updated_at}</td>"
+       . "<td><a href='php_pdo_edit_record.php?id={$id}'>Edit</a></td></tr>";
     }
     echo '</table>';
 }
