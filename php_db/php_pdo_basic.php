@@ -15,11 +15,12 @@ if($stmt->rowCount()){
           for($i=0; $i<$stmt->columnCount();$i++){
              echo "<th>".ucfirst($stmt->getColumnMeta($i)['name'])."</th>";
           }
-    echo "</tr>";
+    echo "<th>&nbsp;</th></tr>";
     while($row = $stmt->fetch()){
         //print_r($row);
        echo " <tr><td>{$row['id']}</td><td>{$row['name']}</td>"
-       . "<td>{$row['description']}</td><td>{$row['updated_at']}</td></tr>";
+       . "<td>{$row['description']}</td><td>{$row['updated_at']}</td>"
+       . "<td><a href='php_pdo_edit_record.php?id={$row['id']}'>Edit</a></td></tr>";
     }
     echo '</table>';
 }

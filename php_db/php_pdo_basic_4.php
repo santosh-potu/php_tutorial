@@ -16,7 +16,8 @@ if($stmt->rowCount()){
              echo "<th>".ucfirst($stmt->getColumnMeta($i)['name'])."</th>";
           }
     echo "</tr>";
-    while($row = $stmt->fetch()){
+    $result = $stmt->fetchAll();
+    foreach($result as $row ){
         //print_r($row);
        echo " <tr><td>{$row['id']}</td><td>{$row['name']}</td>"
        . "<td>{$row['description']}</td><td>{$row['updated_at']}</td></tr>";
