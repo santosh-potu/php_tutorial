@@ -36,7 +36,7 @@ if($_REQUEST['action'] == 'login'  ){
   extract($_REQUEST);
   
   
-  if(!count($errors)){
+  if(!@count($errors)){
       $login_query = "SELECT * FROM users WHERE user_name = ?  
           AND pwd = MD5(?) ";
       if($_REQUEST['from_cookie']){
@@ -101,7 +101,7 @@ if($_REQUEST['action'] == 'login'  ){
                     <tr>
                         <td colspan="2" style="color:red;">
                             <?php 
-                            if(count($errors) > 0){
+                            if(@count($errors) > 0){
                                 foreach($errors as $error){
                                 echo $error.'<br/>';
                                 }
