@@ -19,27 +19,190 @@ SET time_zone = "+00:00";
 --
 -- Database: `php_tutorial`
 --
-
 DELIMITER $$
---
--- Procedures
---
-CREATE  PROCEDURE `CountEmpBySalary` (IN `sal` DECIMAL(10,0), OUT `total` INT)  BEGIN
+CREATE  PROCEDURE `CountEmpBySalary`(IN `sal` DECIMAL(10,0), OUT `total` INT)
+BEGIN
 SELECT count(id) INTO total FROM employees WHERE salary = sal;
 END$$
+DELIMITER ;
 
-CREATE  PROCEDURE `GetAllEmployees` ()  BEGIN
-SELECT * FROM employees;
+DELIMITER $$
+CREATE  PROCEDURE `GetEmployeeGrade`(IN `emp_name` VARCHAR(50), OUT `grade` VARCHAR(20))
+BEGIN
+DECLARE sal DECIMAL(10,0);
+SELECT salary INTO sal FROM employees WHERE name LIKE emp_name;
+
+IF sal >= 20000 THEN
+SET grade = "PLATINUM";
+ELSEIF sal >= 10000 THEN
+SET grade = "GOLD";
+ELSEIF sal >= 5000 THEN
+SET grade = "SILVER";
+ELSE
+SET grade = "BRONZE";
+END IF;
+
 END$$
+DELIMITER ;
 
-CREATE  PROCEDURE `GetEmployeeByName` (IN `emp_name` VARCHAR(50))  BEGIN
-SELECT * FROM employees WHERE name = emp_name;
+DELIMITER $$
+CREATE  PROCEDURE `build_email_list`(INOUT `email_list` VARCHAR(4000))
+BEGIN
+ 
+ DECLARE v_finished INTEGER DEFAULT 0;
+        DECLARE v_email varchar(100) DEFAULT "";
+ 
+  DEClARE email_cursor CURSOR FOR 
+ SELECT email FROM employees;
+ 
+  DECLARE CONTINUE HANDLER 
+        FOR NOT FOUND SET v_finished = 1;
+ 
+ OPEN email_cursor;
+ 
+ get_email: LOOP
+ 
+ FETCH email_cursor INTO v_email;
+ 
+ IF v_finished = 1 THEN 
+ LEAVE get_email;
+ END IF;
+ 
+  SET email_list = CONCAT(v_email,";",email_list);
+ 
+ END LOOP get_email;
+ 
+ CLOSE email_cursor;
+ 
 END$$
+DELIMITER ;
 
-CREATE  PROCEDURE `set_counter` (INOUT `count` INT(4), IN `inc` INT(4))  BEGIN
+DELIMITER $$
+CREATE  PROCEDURE `SimpleCaseEx`(IN `emp_name` VARCHAR(50), OUT `grade` VARCHAR(25))
+BEGIN
+DECLARE sal DECIMAL(10,0) DEFAULT 0;
+SELECT salary INTO sal FROM employees WHERE name LIKE emp_name;
+
+CASE
+WHEN sal >= 20000 THEN
+SET grade = "PLATINUM";
+WHEN sal >= 10000 THEN
+SET grade = "GOLD";
+WHEN sal >= 5000 THEN
+SET grade = "SILVER";
+ELSE
+SET grade = "BRONZE";
+END CASE;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  FUNCTION `getEmployeeGrade`(`emp_name` VARCHAR(100)) RETURNS varchar(50) CHARSET utf8
+    NO SQL
+    DETERMINISTIC
+BEGIN
+DECLARE sal DECIMAL(10,0);
+DECLARE grade varchar(50);
+SELECT salary INTO sal FROM employees WHERE name LIKE emp_name;
+
+IF sal >= 20000 THEN
+SET grade = "PLATINUM";
+ELSEIF sal >= 10000 THEN
+SET grade = "GOLD";
+ELSEIF sal >= 5000 THEN
+SET grade = "SILVER";
+ELSE
+SET grade = "BRONZE";
+END IF;
+
+return grade;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `set_counter`(INOUT count INT(4), IN inc INT(4))
+BEGIN
 SET count = count + inc;
 END$$
+DELIMITER ;
 
+DELIMITER $$
+CREATE  PROCEDURE `mysql_test_repeat_loop`()
+BEGIN
+ DECLARE x INT;
+ DECLARE str VARCHAR(255);
+        
+ SET x = 1;
+        SET str =  '';
+        
+ REPEAT
+ SET  str = CONCAT(str,x,',');
+ SET  x = x + 1; 
+        UNTIL x  > 5
+        END REPEAT;
+ 
+        SELECT str;
+ END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `test_mysql_loop`()
+BEGIN
+ DECLARE x  INT;
+DECLARE str  VARCHAR(255);
+        
+ SET x = 1;
+        SET str =  '';
+        
+ loop_label:  LOOP
+ IF  x > 10 THEN 
+ LEAVE  loop_label;
+ END  IF;
+            
+ SET  x = x + 1;
+ IF  (x mod 2) THEN
+ ITERATE  loop_label;
+ ELSE
+                SET  str = CONCAT(str,x,',');
+ END  IF;
+         END LOOP;    
+ 
+         SELECT str;
+ 
+ END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `GetEmployeeByName`(IN emp_name VARCHAR(50))
+BEGIN
+SELECT * FROM employees WHERE name = emp_name;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `GetAllEmployees`()
+BEGIN
+SELECT * FROM employees;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE  PROCEDURE `test_mysql_while_loop`()
+BEGIN
+ DECLARE x  INT;
+ DECLARE str  VARCHAR(255);
+ 
+ SET x = 1;
+ SET str =  '';
+ 
+ WHILE x  <= 5 DO
+ SET  str = CONCAT(str,x,',');
+ SET  x = x + 1; 
+ END WHILE;
+ 
+ SELECT str;
+ END$$
 DELIMITER ;
 
 -- --------------------------------------------------------
