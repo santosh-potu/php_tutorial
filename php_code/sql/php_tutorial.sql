@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 06, 2019 at 03:34 PM
+-- Generation Time: Jul 15, 2019 at 12:36 PM
 -- Server version: 5.7.26-0ubuntu0.18.10.1
--- PHP Version: 7.2.17-0ubuntu0.18.10.1
+-- PHP Version: 7.2.19-0ubuntu0.18.10.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `php_tutorial`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE  PROCEDURE `CountEmpBySalary` (IN `sal` DECIMAL(10,0), OUT `total` INT)  BEGIN
+SELECT count(id) INTO total FROM employees WHERE salary = sal;
+END$$
+
+CREATE  PROCEDURE `GetAllEmployees` ()  BEGIN
+SELECT * FROM employees;
+END$$
+
+CREATE  PROCEDURE `GetEmployeeByName` (IN `emp_name` VARCHAR(50))  BEGIN
+SELECT * FROM employees WHERE name = emp_name;
+END$$
+
+CREATE  PROCEDURE `set_counter` (INOUT `count` INT(4), IN `inc` INT(4))  BEGIN
+SET count = count + inc;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -43,6 +65,34 @@ INSERT INTO `cart_products` (`product_id`, `product_name`, `product_price`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `salary` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`id`, `name`, `salary`) VALUES
+(1, 'raju', '10000'),
+(2, 'rani', '12000'),
+(3, 'bhumi', '15000'),
+(4, 'hani', '20000'),
+(5, 'test', '7000'),
+(6, 'test', '7000'),
+(7, 'xyz', '20000'),
+(8, 'xyz2', '30000'),
+(9, 'xyz4', '4000'),
+(10, 'xyz5', '5000');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ip_hits`
 --
 
@@ -60,7 +110,7 @@ CREATE TABLE `ip_hits` (
 --
 
 INSERT INTO `ip_hits` (`customer_id`, `user_agent`, `session_id`, `hits`, `ip_address`, `access_time`) VALUES
-(1, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', 'tijgjt32r142eib5e84fp6noac', 4, '::1', '2019-06-06 15:17:06');
+(1, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36', 'tijgjt32r142eib5e84fp6noac', 5, '::1', '2019-07-15 12:22:48');
 
 -- --------------------------------------------------------
 
@@ -164,6 +214,12 @@ ALTER TABLE `cart_products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
@@ -207,10 +263,15 @@ ALTER TABLE `users`
 ALTER TABLE `cart_products`
   MODIFY `product_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
 -- AUTO_INCREMENT for table `ip_hits`
 --
 ALTER TABLE `ip_hits`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `languages`
 --
