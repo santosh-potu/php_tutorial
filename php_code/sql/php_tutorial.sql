@@ -468,3 +468,76 @@ ALTER TABLE `messages`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+--
+-- Table structure for table `employee_audit`
+--
+
+CREATE TABLE `employee_audit` (
+  `id` int(11) NOT NULL,
+  `emp_id` int(11) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `changed_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `employee_audit`
+--
+ALTER TABLE `employee_audit`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `empaudit_id_fk` (`emp_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `employee_audit`
+--
+ALTER TABLE `employee_audit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `employee_audit`
+--
+ALTER TABLE `employee_audit`
+  ADD CONSTRAINT `empaudit_id_fk` FOREIGN KEY (`emp_id`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TRIGGER `before_employee_update` BEFORE UPDATE ON `employees`
+ FOR EACH ROW 
+BEGIN
+INSERT INTO employee_audit
+  SET action = "UPDATE",
+  emp_id = OLD.id,
+  name = CONCAT(OLD.name,':',NEW.NAME),
+  changed_at = NOW();
+END
+
+CREATE EVENT test_event_03
+ON SCHEDULE EVERY 1 MINUTE
+STARTS CURRENT_TIMESTAMP
+ENDS CURRENT_TIMESTAMP + INTERVAL 1 HOUR
+DO
+ INSERT INTO test(name,description)
+   VALUES(concat('test',':',NOW()),concat('test',':',NOW()))
+
+CREATE EVENT test_event_02
+ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE
+ON COMPLETION PRESERVE
+DO
+INSERT INTO test(name,description)
+   VALUES(concat('test',':',NOW()),concat('test',':',NOW()))
+
