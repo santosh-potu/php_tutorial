@@ -39,7 +39,7 @@ class Router{
         
         $method_name = $method.'Action';      
         if(method_exists($controller_inst,$method_name) && 
-                is_callable(array($controller_inst),$method_name) ){
+                is_callable(array($controller_inst,$method_name),false) ){
             $controller_inst->$method_name($this->getRequestParams());
         }else{
             $controller_inst->indexAction($this->getRequestParams());
